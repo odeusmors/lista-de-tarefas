@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List Profissional</title>
+    <link rel="stylesheet" href="styles.css">
+   
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List Responsivo</h1>
+        <div class="input-group">
+            <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
+            <input type="datetime-local" id="startTime" placeholder="Data de início">
+            <input type="number" id="duration" placeholder="Prazo (horas)">
+            <button id="addTaskBtn">Adicionar</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const taskInput = document.getElementById("taskInput");
+            const startTime = document.getElementById("startTime");
+            const duration = document.getElementById("duration");
+            const addTaskBtn = document.getElementById("addTaskBtn");
+            const taskList = document.getElementById("taskList");
+
+            function loadTasks() {
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                taskList.innerHTML = "";
+                tasks.forEach((task, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <div class="task-info">
+                            <span>${task.text}</span>
+                            <span class="status ${task.status}" data-index="${index}">${task.status}</span>
+                        </div>
+                        <div class="task-time">Início: ${task.startTime || 'Não definido'} | Prazo: ${task.duration || 'Não definido'} horas</div>
+                        <button class='delete-btn' data-index='${index}'>Remover</button>
+                    `;
+                    taskList.appendChild(li);
+                });
+            }
+
+            function addTask() {
+                const taskText = taskInput.value.trim();
+                const start = startTime.value;
+                const taskDuration = duration.value;
+                if (taskText === "") return;
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.push({ text: taskText, status: "pendente", startTime: start, duration: taskDuration });
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                taskInput.value = "";
+                startTime.value = "";
+                duration.value = "";
+                loadTasks();
+            }
+
+            function removeTask(index) {
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                tasks.splice(index, 1);
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                loadTasks();
+            }
+
+            function changeStatus(index) {
+                const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+                if (tasks[index].status === "pendente") {
+                    tasks[index].status = "resolvido";
+                } else if (tasks[index].status === "resolvido") {
+                    tasks[index].status = "finalizado";
+                } else {
+                    tasks[index].status = "pendente";
+                }
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                loadTasks();
+            }
+
+            addTaskBtn.addEventListener("click", addTask);
+            taskList.addEventListener("click", (event) => {
+                if (event.target.classList.contains("delete-btn")) {
+                    removeTask(event.target.dataset.index);
+                } else if (event.target.classList.contains("status")) {
+                    changeStatus(event.target.dataset.index);
+                }
+            });
+
+            loadTasks();
+        });
+    </script>
+</body>
+</html>
