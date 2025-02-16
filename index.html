@@ -15,11 +15,23 @@
         <div class="input-group">
             <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
             <input type="datetime-local" id="startTime" placeholder="Data de início">
-            <input type="number" id="duration" placeholder="Prazo (horas)">
+            <input type="number" id="duration" placeholder="Prazo (horas)" min="0">
             <button id="addTaskBtn">Adicionar</button>
         </div>
         <ul id="taskList"></ul>
     </div>
+
+    <script>
+        // Pegamos o input do prazo
+        const durationInput = document.getElementById("duration");
+
+        // Adicionamos um evento para evitar números negativos
+        durationInput.addEventListener("input", function () {
+            if (this.value < 0) {
+                this.value = 0; // Se for negativo, define como 0
+            }
+        });
+    </script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const taskInput = document.getElementById("taskInput");
