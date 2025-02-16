@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
     <link rel="icon" type="image/x-icon" href="/imgs/favicon-32x32.png">
-
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
     <div class="container">
@@ -22,23 +20,26 @@
     </div>
 
     <script>
-        // Pegamos o input do prazo
-        const durationInput = document.getElementById("duration");
-
-        // Adicionamos um evento para evitar números negativos
-        durationInput.addEventListener("input", function () {
-            if (this.value < 0) {
-                this.value = 0; // Se for negativo, define como 0
-            }
-        });
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", () => {
             const taskInput = document.getElementById("taskInput");
             const startTime = document.getElementById("startTime");
             const duration = document.getElementById("duration");
             const addTaskBtn = document.getElementById("addTaskBtn");
             const taskList = document.getElementById("taskList");
+
+            // Função para formatar data no formato brasileiro (dd/mm/yyyy HH:mm)
+            function formatarDataHoraBR(dataISO) {
+                if (!dataISO) return "Não definido";
+
+                const data = new Date(dataISO);
+                const dia = String(data.getDate()).padStart(2, "0");
+                const mes = String(data.getMonth() + 1).padStart(2, "0");
+                const ano = data.getFullYear();
+                const horas = String(data.getHours()).padStart(2, "0");
+                const minutos = String(data.getMinutes()).padStart(2, "0");
+
+                return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+            }
 
             function loadTasks() {
                 const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -50,7 +51,9 @@
                             <span>${task.text}</span>
                             <span class="status ${task.status}" data-index="${index}">${task.status}</span>
                         </div>
-                        <div class="task-time">Início: ${task.startTime || 'Não definido'} | Prazo: ${task.duration || 'Não definido'} horas</div>
+                        <div class="task-time">
+                            Início: ${formatarDataHoraBR(task.startTime)} | Prazo: ${task.duration || 'Não definido'} horas
+                        </div>
                         <button class='delete-btn' data-index='${index}'>Remover</button>
                     `;
                     taskList.appendChild(li);
