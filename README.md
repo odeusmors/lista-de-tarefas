@@ -18,7 +18,9 @@ Este é um projeto de lista de tarefas (To-Do List) desenvolvido para ajudar na 
 
 📱 Design responsivo para desktop e dispositivos móveis
 
-📂 Como usar
+📂 Como usar : 
+
+link: https://lista-de-tarefas-responsivo.netlify.app/
 
 Acesse o site através do link fornecido acima.
 
