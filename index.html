@@ -33,6 +33,7 @@
                 if (!dataISO) return "Não definido";
 
                 const data = new Date(dataISO);
+                console.log(data); // Verifique o objeto Date no OperaGX
                 const dia = String(data.getDate()).padStart(2, "0");
                 const mes = String(data.getMonth() + 1).padStart(2, "0");
                 const ano = data.getFullYear();
@@ -41,6 +42,7 @@
 
                 return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
             }
+
 
 
             function loadTasks() {
