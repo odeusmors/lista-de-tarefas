@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="/imgs/favicon-32x32.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>To-Do List Responsivo</h1>
@@ -27,7 +29,6 @@
             const addTaskBtn = document.getElementById("addTaskBtn");
             const taskList = document.getElementById("taskList");
 
-            // Função para formatar data no formato brasileiro (dd/mm/yyyy HH:mm)
             function formatarDataHoraBR(dataISO) {
                 if (!dataISO) return "Não definido";
 
@@ -40,6 +41,7 @@
 
                 return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
             }
+
 
             function loadTasks() {
                 const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -107,4 +109,5 @@
         });
     </script>
 </body>
+
 </html>
