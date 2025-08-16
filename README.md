@@ -20,9 +20,8 @@ Este é um projeto de lista de tarefas (To-Do List) desenvolvido para ajudar na 
 
 📂 Como usar : 
 
-link: https://lista-de-tarefas-responsivo.netlify.app/
 
-Acesse o site através do link fornecido acima.
+Acesse o site.
 
 Digite uma nova tarefa no campo de entrada e pressione "Adicionar".
 
